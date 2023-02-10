@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Task/Task.css'
+import './Task.css'
 
 const Task = ({ label, important = false }) => {
 

@@ -6,7 +6,6 @@ import TaskList from './components/TaskList/TaskList'
 import Footer from './components/Footer/Footer'
 import './index.css'
 
-
 const App = () => {
 
   const toDoData = [
@@ -23,7 +22,7 @@ const App = () => {
         <AppHeader />
       </header>
       <section className="main">
-        <TaskList todos={ toDoData }/>
+        <TaskList todos={ toDoData } />
         <Footer />
       </section>
     </section>

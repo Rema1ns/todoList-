@@ -1,21 +1,21 @@
 import React from 'react';
+
 import '../TaskList/TaskList.css'
+import Task from './Task/Task'
 
-import Task from '../Task/Task'
-
-const TaskList = ({ todos }) => {
-
-
+const TaskList = (props) => {
+  const { todos } = props;
+  let label = 'Edit task';
   const elements = todos.map((item) => {
     const {id, className, important, ...rest} = item;
     const style =  {
       display: important ? 'block' : 'none'
     }
-
+    console.log(props)
     return (
         <li key={id} className={className}>
           <Task { ...rest } />
-          <input type="text" className="edit" value="Editing task" style={style} />
+          <input type="text" className="edit" value={label} style={style}/>
         </li>
     )
   })
