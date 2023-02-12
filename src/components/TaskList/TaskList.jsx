@@ -3,18 +3,19 @@ import React from 'react';
 import '../TaskList/TaskList.css'
 import Task from './Task/Task'
 
-const TaskList = (props) => {
-  const { todos } = props;
+const TaskList = ({ todos, delItem }) => {
+
   let label = 'Edit task';
   const elements = todos.map((item) => {
     const {id, className, important, ...rest} = item;
     const style =  {
       display: important ? 'block' : 'none'
     }
-    console.log(props)
     return (
         <li key={id} className={className}>
-          <Task { ...rest } />
+          <Task
+              {...rest}
+              delItem={ () => delItem(id) } />
           <input type="text" className="edit" value={label} style={style}/>
         </li>
     )

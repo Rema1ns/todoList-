@@ -8,3 +8,11 @@
         height: 40px;
     }
 }
+.important {
+    color: #af5b5e;
+    font-weight: bold;
+}
+
+.done {
+ text-decoration: line-through;
+}
