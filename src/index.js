@@ -48,7 +48,7 @@ class App extends Component {
       const newArray = [ ...toDoData ]
       const arr = []
       newArray.map((el) => {
-        if (el.done == true) {
+        if (el.done === true) {
 
         } else {
           arr.push(el)
