@@ -11,12 +11,53 @@ import './index.css'
 
 class App extends Component {
 
+  maxId = 100
+
   state = {
     toDoData: [
-      {label: 'Completed task', important: false, id: 1, className: 'completed'},
-      {label: 'Editing task', important: true, id: 2, className: 'editing'},
-      {label: 'Active task', important: false, id: 3}
-    ]
+        this.createTodoItem('Complete task'),
+        this.createTodoItem('Edition task'),
+        this.createTodoItem('Active task'),
+    ],
+    filter: 'all'
+  }
+  createTodoItem(label) {
+    return {
+      label,
+      important: false,
+      done: false,
+      id: this.maxId++,
+      className: ''
+    }
+  }  // ================= СОЗДАНИЕ ИТЕМА ===========>
+
+  onFilterChange = (filter) => {
+    this.setState({filter})
+  }
+  filter(items, filter) {
+    switch (filter) {
+      case 'all': return items;
+      case 'active': return items.filter((items) => !items.done)
+      case 'Completed': return items.filter((items) => items.done)
+      default: return items
+    }
+  }  // ========================= ФИЛЬТР ===========>
+
+  delCompleteItems = () => {
+    this.setState(({ toDoData }) => {
+      const newArray = [ ...toDoData ]
+      const arr = []
+      newArray.map((el) => {
+        if (el.done == true) {
+
+        } else {
+          arr.push(el)
+        }
+      })
+      return {
+        toDoData: arr
+      }
+    })
   }
 
   delItem = (id) => {
@@ -31,21 +72,70 @@ class App extends Component {
         toDoData: newArray
       }
     })
-}
+} // ====================== УДАЛЕНИЕ ИТЕМА ===========>
 
+  addItem = (text) => {
+    const newItem = this.createTodoItem(text)
+
+    this.setState(({ toDoData }) => {
+      const newArr = [...toDoData, newItem ]
+      return {
+        toDoData: newArr
+      }
+    })
+  } // ================== ДОБАВЛЕНИЕ ИТЕМА ===========>
+
+  onToggleProperty (arr, id, propName) {
+    const idx = arr.findIndex((el) => el.id === id)
+    const oldItem = arr[idx]
+    const newItem = { ...oldItem, [propName]: !oldItem[propName]}
+    return [
+      ...arr.slice(0, idx),
+      newItem,
+      ...arr.slice(idx + 1)
+    ]
+  } // ====== ФУНКЦИЯ ТОГГЛ =========>
+
+  onToggleImportant = (id) => {
+    this.setState(({ toDoData }) => {
+      return { toDoData: this.onToggleProperty(toDoData, id, 'important')}
+    })
+  };   // ========== ВАЖНАЯ ЗАДАЧА ===========>
+
+  onToggleDone = (id) => {
+    this.setState(({ toDoData }) => {
+      return { toDoData: this.onToggleProperty(toDoData, id, 'done')}
+    })
+  } // ============== ВЫПОЛНЕНАЯ ЗАДАЧА ===========>
+
+
+// ======================================================== RENDER ===========>
   render() {
+    const { toDoData, filter } = this.state
 
+    const visibleItems = this.filter(toDoData, filter)
+
+    const doneCount = toDoData.filter((el) => el.done).length
+    const todoCount = toDoData.length - doneCount;
     return (
+
         <section className='todoapp'>
           <header>
             <h1>todos</h1>
-            <AppHeader/>
+            <AppHeader
+                addItem={ this.addItem }/>
           </header>
           <section className="main">
             <TaskList
-                todos={this.state.toDoData}
-                delItem={ this.delItem }/>
-            <Footer/>
+                todos={visibleItems}
+                delItem={ this.delItem }
+                onToggleImportant={this.onToggleImportant}
+                onToggleDone={this.onToggleDone}/>
+            <Footer
+                delCompleteItems={this.delCompleteItems}
+                filter={ filter }
+                onFilterChange={this.onFilterChange}
+                todoCount={ todoCount }/>
           </section>
         </section>
     )

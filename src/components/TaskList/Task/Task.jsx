@@ -5,29 +5,10 @@ import { formatDistanceToNow } from 'date-fns'
 const TimeLeft = formatDistanceToNow(new Date(), {includeSeconds: true})
 
 export default class Task extends Component {
-  state = {
-    important: false,
-    done: false
-  }
-  onMark = () => {
-    this.setState(({important}) => {
-      return {
-        important: !important
-      }
-    })
-  }
 
-  onDeleted = () => {
-    this.setState(({ done }) => {
-      return {
-        done: !done
-      }
-    })
-  }
 
   render() {
-    const { label, delItem } = this.props
-    const { done, important } = this.state
+    const { label, delItem, onToggleImportant, onToggleDone, important, done } = this.props
 
     let toggles = ""
     if (important) {
@@ -42,15 +23,17 @@ export default class Task extends Component {
           <input
               className="toggle"
               type="checkbox"
-              onClick={ this.onMark }></input>
+              onClick={ onToggleImportant }></input>
           <label>
             <span
                 className={ toggles }
-                onClick={ this.onDeleted }>{label}</span>
+                onClick={ onToggleDone }>{label}</span>
             <span className="created">{TimeLeft}</span>
           </label>
 
-          <button className="icon icon-edit"></button>
+          <button
+              className="icon icon-edit"
+              ></button>
           <button
               className="icon icon-destroy"
               onClick={ delItem } >
