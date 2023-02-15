@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
 
 import '../TaskList/TaskList.css'
 import Task from './Task/Task'
 
 
 export default class TaskList extends Component {
+
+  static defaultProps = {
+    delItem: (() => {}),
+    onToggleImportant: (() => {}),
+    OnToggleDone: (() => {}),
+  }
+
+  static propTypes = {
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    delItem: PropTypes.func,
+    onToggleImportant: PropTypes.func,
+    OnToggleDone: PropTypes.func,
+  }
 
 
   render() {

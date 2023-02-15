@@ -1,7 +1,18 @@
 import React,{Component} from 'react';
 import '../TaskFilter/TaskFilter.css'
+import PropTypes from "prop-types";
 
 export default class TaskFilter extends Component {
+
+  static defaultProps = {
+    onFilterChange: (() => {}),
+    filter: 'all'
+  }
+
+  static propTypes = {
+    onFilterChange: PropTypes.func,
+    filter: PropTypes.string
+  }
 
   buttons = [
     { name: 'all', label: 'all' },
@@ -15,6 +26,7 @@ export default class TaskFilter extends Component {
 
     const buttons = this.buttons.map(({name, label}) => {
       const isActive = filter === name
+
       const clazz = isActive ? 'selected' : ''
 
       return (

@@ -1,14 +1,34 @@
 import React, { Component } from 'react';
 import './Task.css'
 import { formatDistanceToNow } from 'date-fns'
+import PropTypes from "prop-types";
 
-const TimeLeft = formatDistanceToNow(new Date(), {includeSeconds: true})
 
 export default class Task extends Component {
 
+  static defaultProps = {
+    label: 'new Task',
+    delItem: (() => {}),
+    onToggleImportant: (() => {}),
+    OnToggleDone: (() => {}),
+    important: false,
+    done: false,
+    tm: new Date()
+  }
+
+  static propTypes = {
+    label: PropTypes.string,
+    delItem: PropTypes.func,
+    onToggleImportant: PropTypes.func,
+    OnToggleDone: PropTypes.func,
+    important: PropTypes.bool,
+    done: PropTypes.bool,
+    tm: PropTypes.string
+  }
 
   render() {
-    const { label, delItem, onToggleImportant, onToggleDone, important, done } = this.props
+    const { label, delItem, onToggleImportant, onToggleDone, important, done, tm} = this.props
+    const TimeLeft = formatDistanceToNow(new Date(tm), {includeSeconds: true})
 
     let toggles = ""
     if (important) {
@@ -28,7 +48,7 @@ export default class Task extends Component {
             <span
                 className={ toggles }
                 onClick={ onToggleDone }>{label}</span>
-            <span className="created">{TimeLeft}</span>
+            <span className="created">{ TimeLeft }</span>
           </label>
 
           <button

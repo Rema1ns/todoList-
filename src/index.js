@@ -11,6 +11,8 @@ import './index.css'
 
 class App extends Component {
 
+
+
   maxId = 100
 
   state = {
@@ -22,12 +24,14 @@ class App extends Component {
     filter: 'all'
   }
   createTodoItem(label) {
+    const lol = new Date()
     return {
       label,
       important: false,
       done: false,
       id: this.maxId++,
-      className: ''
+      className: '',
+      tm: `${lol}`
     }
   }  // ================= СОЗДАНИЕ ИТЕМА ===========>
 
