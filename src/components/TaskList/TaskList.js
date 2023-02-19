@@ -19,7 +19,7 @@ export default class TaskList extends Component {
   };
 
   render() {
-    const { todos, delItem, onToggleDone, onToggleImportant, onToggleEdit } = this.props;
+    const { todos, delItem, onToggleDone, onToggleEdit } = this.props;
 
     const elements = todos.map((item) => {
       const { id, edit, ...rest } = item;
@@ -49,7 +49,6 @@ export default class TaskList extends Component {
             edit={edit}
             {...rest}
             delItem={() => delItem(id)}
-            onToggleImportant={() => onToggleImportant(id)}
             onToggleDone={() => onToggleDone(id)}
           />
           <form onSubmit={onSubmit}>

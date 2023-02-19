@@ -9,7 +9,6 @@ export default class Task extends Component {
     delItem: () => {},
     onToggleImportant: () => {},
     OnToggleDone: () => {},
-    important: false,
     done: false,
     tm: new Date(),
   };
@@ -19,13 +18,12 @@ export default class Task extends Component {
     delItem: PropTypes.func,
     onToggleImportant: PropTypes.func,
     OnToggleDone: PropTypes.func,
-    important: PropTypes.bool,
     done: PropTypes.bool,
     tm: PropTypes.string,
   };
 
   render() {
-    const { label, delItem, onToggleImportant, onToggleDone, important, done, tm, onToggleEdit, edit } = this.props;
+    const { label, delItem, onToggleDone, done, tm, onToggleEdit, edit } = this.props;
     const TimeLeft = formatDistanceToNow(new Date(tm), { includeSeconds: true });
 
     const style = {
@@ -33,20 +31,15 @@ export default class Task extends Component {
     };
 
     let toggles = '';
-    if (important) {
-      toggles += ' important';
-    }
     if (done) {
       toggles += ' done';
     }
 
     return (
       <div className="view" style={style}>
-        <input className="toggle" type="checkbox" onClick={onToggleImportant}></input>
+        <input className="toggle" type="checkbox" onClick={onToggleDone}></input>
         <label>
-          <span className={toggles} onClick={onToggleDone}>
-            {label}
-          </span>
+          <span className={toggles}>{label}</span>
           <span className="created">{TimeLeft}</span>
         </label>
 

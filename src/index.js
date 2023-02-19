@@ -22,7 +22,6 @@ class App extends Component {
     const lol = new Date();
     return {
       label,
-      important: false,
       done: false,
       id: this.maxId++,
       className: '',
@@ -92,12 +91,6 @@ class App extends Component {
     const newItem = { ...oldItem, [propName]: !oldItem[propName] };
     return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
   } // ====== ФУНКЦИЯ ТОГГЛ =========>
-
-  onToggleImportant = (id) => {
-    this.setState(({ toDoData }) => {
-      return { toDoData: this.onToggleProperty(toDoData, id, 'important') };
-    });
-  }; // ========== ВАЖНАЯ ЗАДАЧА ===========>
 
   onToggleDone = (id) => {
     this.setState(({ toDoData }) => {
