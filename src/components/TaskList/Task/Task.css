@@ -1,18 +1,18 @@
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    .toggle-all,
-    .todo-list li .toggle {
-        background: none;
-    }
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .toggle-all,
+  .todo-list li .toggle {
+    background: none;
+  }
 
-    .todo-list li .toggle {
-        height: 40px;
-    }
+  .todo-list li .toggle {
+    height: 40px;
+  }
 }
 .important {
-    color: #af5b5e;
-    font-weight: bold;
+  color: #af5b5e;
+  font-weight: bold;
 }
 
 .done {
- text-decoration: line-through;
+  text-decoration: line-through;
 }

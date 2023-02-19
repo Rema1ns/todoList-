@@ -1,149 +1,148 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
-
-import AppHeader from './components/NewTaskForm/NewTaskForm'
-import TaskList from './components/TaskList/TaskList'
-import Footer from './components/Footer/Footer'
-import './index.css'
-
-
+import AppHeader from './components/NewTaskForm/NewTaskForm';
+import TaskList from './components/TaskList/TaskList';
+import Footer from './components/Footer/Footer';
+import './index.css';
 
 class App extends Component {
-
-
-
-  maxId = 100
+  maxId = 100;
 
   state = {
     toDoData: [
-        this.createTodoItem('Complete task'),
-        this.createTodoItem('Edition task'),
-        this.createTodoItem('Active task'),
+      this.createTodoItem('Complete task'),
+      this.createTodoItem('Edition task'),
+      this.createTodoItem('Active task'),
     ],
-    filter: 'all'
-  }
+    filter: 'all',
+    edit: false,
+  };
   createTodoItem(label) {
-    const lol = new Date()
+    const lol = new Date();
     return {
       label,
       important: false,
       done: false,
       id: this.maxId++,
       className: '',
-      tm: `${lol}`
-    }
-  }  // ================= СОЗДАНИЕ ИТЕМА ===========>
+      tm: `${lol}`,
+      edit: false,
+    };
+  } // ================= СОЗДАНИЕ ИТЕМА ===========>
 
   onFilterChange = (filter) => {
-    this.setState({filter})
-  }
+    this.setState({ filter });
+  };
   filter(items, filter) {
     switch (filter) {
-      case 'all': return items;
-      case 'active': return items.filter((items) => !items.done)
-      case 'Completed': return items.filter((items) => items.done)
-      default: return items
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((items) => !items.done);
+      case 'Completed':
+        return items.filter((items) => items.done);
+      default:
+        return items;
     }
-  }  // ========================= ФИЛЬТР ===========>
+  } // ========================= ФИЛЬТР ===========>
 
   delCompleteItems = () => {
     this.setState(({ toDoData }) => {
-      const newArray = [ ...toDoData ]
-      const arr = []
+      const newArray = [...toDoData];
+      const arr = [];
       newArray.map((el) => {
         if (el.done === true) {
-
+          return;
         } else {
-          arr.push(el)
+          return arr.push(el);
         }
-      })
+      });
       return {
-        toDoData: arr
-      }
-    })
-  }
+        toDoData: arr,
+      };
+    });
+  };
 
   delItem = (id) => {
     this.setState(({ toDoData }) => {
-      const idx = toDoData.findIndex((el) => el.id === id)
-      const newArray = [
-          ...toDoData.slice(0, idx),
-          ...toDoData.slice(idx + 1)
-      ]
+      const idx = toDoData.findIndex((el) => el.id === id);
+      const newArray = [...toDoData.slice(0, idx), ...toDoData.slice(idx + 1)];
 
       return {
-        toDoData: newArray
-      }
-    })
-} // ====================== УДАЛЕНИЕ ИТЕМА ===========>
+        toDoData: newArray,
+      };
+    });
+  }; // ====================== УДАЛЕНИЕ ИТЕМА ===========>
 
   addItem = (text) => {
-    const newItem = this.createTodoItem(text)
+    const newItem = this.createTodoItem(text);
 
     this.setState(({ toDoData }) => {
-      const newArr = [...toDoData, newItem ]
+      const newArr = [...toDoData, newItem];
       return {
-        toDoData: newArr
-      }
-    })
-  } // ================== ДОБАВЛЕНИЕ ИТЕМА ===========>
+        toDoData: newArr,
+      };
+    });
+  }; // ================== ДОБАВЛЕНИЕ ИТЕМА ===========>
 
-  onToggleProperty (arr, id, propName) {
-    const idx = arr.findIndex((el) => el.id === id)
-    const oldItem = arr[idx]
-    const newItem = { ...oldItem, [propName]: !oldItem[propName]}
-    return [
-      ...arr.slice(0, idx),
-      newItem,
-      ...arr.slice(idx + 1)
-    ]
+  onToggleProperty(arr, id, propName) {
+    const idx = arr.findIndex((el) => el.id === id);
+    const oldItem = arr[idx];
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+    return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
   } // ====== ФУНКЦИЯ ТОГГЛ =========>
 
   onToggleImportant = (id) => {
     this.setState(({ toDoData }) => {
-      return { toDoData: this.onToggleProperty(toDoData, id, 'important')}
-    })
-  };   // ========== ВАЖНАЯ ЗАДАЧА ===========>
+      return { toDoData: this.onToggleProperty(toDoData, id, 'important') };
+    });
+  }; // ========== ВАЖНАЯ ЗАДАЧА ===========>
 
   onToggleDone = (id) => {
     this.setState(({ toDoData }) => {
-      return { toDoData: this.onToggleProperty(toDoData, id, 'done')}
-    })
-  } // ============== ВЫПОЛНЕНАЯ ЗАДАЧА ===========>
+      return { toDoData: this.onToggleProperty(toDoData, id, 'done') };
+    });
+  }; // ============== ВЫПОЛНЕНАЯ ЗАДАЧА ===========>
 
+  onToggleEdit = (id) => {
+    this.setState(({ toDoData }) => {
+      return { toDoData: this.onToggleProperty(toDoData, id, 'edit') };
+    });
+  };
 
-// ======================================================== RENDER ===========>
+  // ======================================================== RENDER ===========>
   render() {
-    const { toDoData, filter } = this.state
+    const { toDoData, filter, edit } = this.state;
 
-    const visibleItems = this.filter(toDoData, filter)
+    const visibleItems = this.filter(toDoData, filter, edit);
 
-    const doneCount = toDoData.filter((el) => el.done).length
+    const doneCount = toDoData.filter((el) => el.done).length;
     const todoCount = toDoData.length - doneCount;
     return (
-
-        <section className='todoapp'>
-          <header>
-            <h1>todos</h1>
-            <AppHeader
-                addItem={ this.addItem }/>
-          </header>
-          <section className="main">
-            <TaskList
-                todos={visibleItems}
-                delItem={ this.delItem }
-                onToggleImportant={this.onToggleImportant}
-                onToggleDone={this.onToggleDone}/>
-            <Footer
-                delCompleteItems={this.delCompleteItems}
-                filter={ filter }
-                onFilterChange={this.onFilterChange}
-                todoCount={ todoCount }/>
-          </section>
+      <section className="todoapp">
+        <header>
+          <h1>todos</h1>
+          <AppHeader addItem={this.addItem} />
+        </header>
+        <section className="main">
+          <TaskList
+            onToggleEdit={this.onToggleEdit}
+            todos={visibleItems}
+            delItem={this.delItem}
+            onToggleImportant={this.onToggleImportant}
+            onToggleDone={this.onToggleDone}
+          />
+          <Footer
+            delCompleteItems={this.delCompleteItems}
+            filter={filter}
+            onFilterChange={this.onFilterChange}
+            todoCount={todoCount}
+          />
         </section>
-    )
+      </section>
+    );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'));
