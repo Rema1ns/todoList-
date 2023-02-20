@@ -37,7 +37,7 @@ export default class Task extends Component {
 
     return (
       <div className="view" style={style}>
-        <input className="toggle" type="checkbox" onClick={onToggleDone}></input>
+        <input className="toggle" type="checkbox" onClick={onToggleDone} checked={done}></input>
         <label>
           <span className={toggles}>{label}</span>
           <span className="created">{TimeLeft}</span>
