@@ -19,13 +19,12 @@ class App extends Component {
     edit: false,
   };
   createTodoItem(label) {
-    const lol = new Date();
     return {
       label,
       done: false,
       id: this.maxId++,
       className: '',
-      tm: `${lol}`,
+      tm: `${new Date()}`,
       edit: false,
     };
   } // ================= СОЗДАНИЕ ИТЕМА ===========>
