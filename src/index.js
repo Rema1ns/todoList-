@@ -24,7 +24,7 @@ class App extends Component {
       done: false,
       id: this.maxId++,
       className: '',
-      tm: `${new Date()}`,
+      tm: new Date(),
       edit: false,
     };
   } // ================= СОЗДАНИЕ ИТЕМА ===========>

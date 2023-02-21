@@ -7,7 +7,6 @@ export default class Task extends Component {
   static defaultProps = {
     label: 'new Task',
     delItem: () => {},
-    onToggleImportant: () => {},
     OnToggleDone: () => {},
     done: false,
     tm: new Date(),
@@ -16,7 +15,6 @@ export default class Task extends Component {
   static propTypes = {
     label: PropTypes.string,
     delItem: PropTypes.func,
-    onToggleImportant: PropTypes.func,
     OnToggleDone: PropTypes.func,
     done: PropTypes.bool,
     tm: PropTypes.string,
@@ -24,7 +22,7 @@ export default class Task extends Component {
 
   render() {
     const { label, delItem, onToggleDone, done, tm, onToggleEdit, edit } = this.props;
-    const TimeLeft = formatDistanceToNow(new Date(tm), { includeSeconds: true });
+    const TimeLeft = formatDistanceToNow(tm, { includeSeconds: true });
 
     const style = {
       display: edit ? 'none' : 'block',
