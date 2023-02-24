@@ -3,9 +3,12 @@ import '../TaskFilter/TaskFilter.css';
 import PropTypes from 'prop-types';
 
 export default class TaskFilter extends Component {
+  filterShowAll = this.props.filterShowAll;
+  filterShowActive = this.props.filterShowActive;
+  filterShowCompleted = this.props.filterShowCompleted;
   static defaultProps = {
     onFilterChange: () => {},
-    filter: 'all',
+    filter: this.filterShowAll,
   };
 
   static propTypes = {
@@ -14,9 +17,9 @@ export default class TaskFilter extends Component {
   };
 
   buttons = [
-    { name: 'all', label: 'all' },
-    { name: 'active', label: 'active' },
-    { name: 'Completed', label: 'Completed' },
+    { name: this.filterShowAll, label: this.filterShowAll },
+    { name: this.filterShowActive, label: this.filterShowActive },
+    { name: this.filterShowCompleted, label: this.filterShowCompleted },
   ];
 
   render() {

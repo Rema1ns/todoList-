@@ -40,7 +40,9 @@ body {
   font-weight: 300;
 }
 
-
+input:focus {
+  outline: 0;
+}
 
 button:focus {
   outline: 0;

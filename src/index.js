@@ -15,7 +15,7 @@ class App extends Component {
       this.createTodoItem('Edition task'),
       this.createTodoItem('Active task'),
     ],
-    filter: 'all',
+    filter: this.filterShowAll,
     edit: false,
   };
   createTodoItem(label) {
@@ -32,20 +32,23 @@ class App extends Component {
   onFilterChange = (filter) => {
     this.setState({ filter });
   };
+  filterShowAll = 'all';
+  filterShowActive = 'active';
+  filterShowCompleted = 'Completed';
   filter(items, filter) {
     switch (filter) {
-      case 'all':
+      case this.filterShowAll:
         return items;
-      case 'active':
+      case this.filterShowActive:
         return items.filter((items) => !items.done);
-      case 'Completed':
+      case this.filterShowCompleted:
         return items.filter((items) => items.done);
       default:
         return items;
     }
   } // ========================= ФИЛЬТР ===========>
 
-  delCompleteItems = () => {
+  deleteCompleteItems = () => {
     this.setState(({ toDoData }) => {
       const newArray = [...toDoData];
       const arr = [];
@@ -62,7 +65,7 @@ class App extends Component {
     });
   };
 
-  delItem = (id) => {
+  deleteItem = (id) => {
     this.setState(({ toDoData }) => {
       const idx = toDoData.findIndex((el) => el.id === id);
       const newArray = [...toDoData.slice(0, idx), ...toDoData.slice(idx + 1)];
@@ -121,13 +124,16 @@ class App extends Component {
           <TaskList
             onToggleEdit={this.onToggleEdit}
             todos={visibleItems}
-            delItem={this.delItem}
+            delItem={this.deleteItem}
             onToggleImportant={this.onToggleImportant}
             onToggleDone={this.onToggleDone}
           />
           <Footer
-            delCompleteItems={this.delCompleteItems}
+            delCompleteItems={this.deleteCompleteItems}
             filter={filter}
+            filterShowAll={this.filterShowAll}
+            filterShowActive={this.filterShowActive}
+            filterShowCompleted={this.filterShowCompleted}
             onFilterChange={this.onFilterChange}
             todoCount={todoCount}
           />

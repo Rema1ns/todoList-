@@ -6,7 +6,6 @@ import TaskFilter from '../TaskFilter/TaskFilter';
 
 export default class Footer extends Component {
   static defaultProps = {
-    filter: 'all',
     todoCount: '0',
     onFilterChange: () => {},
     delCompleteItems: () => {},
@@ -20,11 +19,25 @@ export default class Footer extends Component {
   };
 
   render() {
-    const { todoCount, filter, onFilterChange, delCompleteItems } = this.props;
+    const {
+      todoCount,
+      filter,
+      onFilterChange,
+      delCompleteItems,
+      filterShowAll,
+      filterShowActive,
+      filterShowCompleted,
+    } = this.props;
     return (
       <footer className="footer">
         <span className="todo-count">{todoCount}</span>
-        <TaskFilter onFilterChange={onFilterChange} filter={filter} />
+        <TaskFilter
+          onFilterChange={onFilterChange}
+          filter={filter}
+          filterShowAll={filterShowAll}
+          filterShowActive={filterShowActive}
+          filterShowCompleted={filterShowCompleted}
+        />
         <button onClick={delCompleteItems} className="clear-completed">
           Clear completed
         </button>
