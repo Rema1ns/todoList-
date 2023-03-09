@@ -3,6 +3,8 @@ import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 
+import Timer from './timer/timer';
+
 export default class Task extends Component {
   static defaultProps = {
     label: 'new Task',
@@ -38,6 +40,7 @@ export default class Task extends Component {
         <input className="toggle" type="checkbox" onClick={onToggleDone} checked={done}></input>
         <label>
           <span className={toggles}>{label}</span>
+          <Timer />
           <span className="created">{TimeLeft}</span>
         </label>
 
