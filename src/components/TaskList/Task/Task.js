@@ -23,7 +23,7 @@ export default class Task extends Component {
   };
 
   render() {
-    const { label, delItem, onToggleDone, done, tm, onToggleEdit, edit } = this.props;
+    const { label, delItem, onToggleDone, done, tm, onToggleEdit, edit, id } = this.props;
     const TimeLeft = formatDistanceToNow(tm, { includeSeconds: true });
 
     const style = {
@@ -40,7 +40,7 @@ export default class Task extends Component {
         <input className="toggle" type="checkbox" onClick={onToggleDone} checked={done}></input>
         <label>
           <span className={toggles}>{label}</span>
-          <Timer />
+          <Timer id={id} />
           <span className="created">{TimeLeft}</span>
         </label>
 

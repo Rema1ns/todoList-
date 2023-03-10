@@ -48,6 +48,7 @@ export default class TaskList extends Component {
             onToggleEdit={() => onToggleEdit(id)}
             edit={edit}
             {...rest}
+            id={id}
             delItem={() => delItem(id)}
             onToggleDone={() => onToggleDone(id)}
           />

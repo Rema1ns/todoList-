@@ -3,7 +3,8 @@ import './timer.css';
 
 export default class Timer extends Component {
   state = {
-    timeMs: 0,
+    timeMs:
+      sessionStorage.getItem('time' + this.props.id) === null ? 0 : sessionStorage.getItem('time' + this.props.id),
     timeMinute: 0,
     count: false,
   };
@@ -24,35 +25,26 @@ export default class Timer extends Component {
   //================================================= основная функция =====>
 
   timer = () => {
+    const oldTime = Number(sessionStorage.getItem('time' + this.props.id));
     if (this.state.count === true) {
       this.setState({
-        timeMs: this.state.timeMs + 1,
+        timeMs: oldTime + 1,
       });
     }
-    console.log(this.state.timeMs);
-  };
-
-  updateTime = () => {
-    clearTimeout(this.timeOut);
-    this.timeOut = setTimeout(this.timer, 1000);
+    sessionStorage.setItem('time' + this.props.id, this.state.timeMs);
   };
 
   //================================================= обновление времени =====>
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.timeMs !== this.state.timeMs) {
-      this.updateTime();
+      setTimeout(this.timer, 1000);
     }
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timeOut);
-  }
-
-  //================================================= отображение времени =====>
+  //=========================================== отображение формата часов =====>
 
   timerNormalShow(e) {
-    e.toString();
     if (e > 59) {
       this.setState({
         timeMs: 0,
