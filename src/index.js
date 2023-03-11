@@ -11,16 +11,18 @@ class App extends Component {
 
   state = {
     toDoData: [
-      this.createTodoItem('Complete task'),
-      this.createTodoItem('Edition task'),
-      this.createTodoItem('Active task'),
+      this.createTodoItem('Complete task', 0, 0),
+      this.createTodoItem('Edition task', 0, 0),
+      this.createTodoItem('Active task', 0, 0),
     ],
     filter: this.filterShowAll,
     edit: false,
   };
-  createTodoItem(label) {
+  createTodoItem(label, minutes, seconds) {
     return {
       label,
+      minutes,
+      seconds,
       done: false,
       id: this.maxId++,
       className: '',
@@ -69,15 +71,15 @@ class App extends Component {
     this.setState(({ toDoData }) => {
       const idx = toDoData.findIndex((el) => el.id === id);
       const newArray = [...toDoData.slice(0, idx), ...toDoData.slice(idx + 1)];
-
+      sessionStorage.clear('time' + id);
       return {
         toDoData: newArray,
       };
     });
   }; // ====================== УДАЛЕНИЕ ИТЕМА ===========>
 
-  addItem = (text) => {
-    const newItem = this.createTodoItem(text);
+  addItem = (text, min, sec) => {
+    const newItem = this.createTodoItem(text, min, sec);
 
     this.setState(({ toDoData }) => {
       const newArr = [...toDoData, newItem];

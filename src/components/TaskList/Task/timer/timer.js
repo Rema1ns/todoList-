@@ -2,16 +2,32 @@ import React, { Component } from 'react';
 import './timer.css';
 
 export default class Timer extends Component {
+  //================================================ дефолтные значения =====>
+
+  defaultMinutes = this.props.minutes === '' ? 0 : Number(this.props.minutes);
+  defaultSeconds =
+    this.props.seconds === ''
+      ? sessionStorage.getItem('time' + this.props.id) === null
+        ? 0
+        : sessionStorage.getItem('time' + this.props.id)
+      : sessionStorage.getItem('time' + this.props.id) === null
+      ? Number(this.props.seconds)
+      : sessionStorage.getItem('time' + this.props.id);
+
+  //========================================================= стейты ========>
+
   state = {
-    timeMs:
-      sessionStorage.getItem('time' + this.props.id) === null ? 0 : sessionStorage.getItem('time' + this.props.id),
-    timeMinute: 0,
+    timeMs: this.defaultSeconds,
+    timeMinute: this.defaultMinutes,
     count: false,
   };
 
   //============================================== управление старт стоп =====>
 
   start = () => {
+    if (sessionStorage.getItem('time' + this.props.id) === null) {
+      sessionStorage.setItem('time' + this.props.id, this.props.seconds);
+    }
     this.setState({ count: true });
     if (this.state.count === false) {
       setTimeout(this.timer, 1000);
@@ -51,11 +67,8 @@ export default class Timer extends Component {
         timeMinute: this.state.timeMinute + 1,
       });
     }
-    if (e < 10) {
-      return '0' + e;
-    } else {
-      return e;
-    }
+    e = e < 10 ? '0' + e : e;
+    return e;
   }
 
   //============================================================== render =====>
